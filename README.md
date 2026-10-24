@@ -1,18 +1,32 @@
-# Cooperative Releases
+# Parmenas releases
 
-Public release channel for the Cooperative platform.
+Public release channel for **Parmenas**, the member-owned co-op platform by [Viable Food](https://viablefood.org).
 
-This repository intentionally contains only release metadata and deployable update packages. The application source repository remains private.
+*Commitments, carried out.*
 
-## Channels
+This repository holds only signed release packages. The application source is private.
 
-- `channels/stable.json` - production-ready releases
-- `channels/beta.json` - test/pre-release builds
+## What is here
 
-Installed Cooperative instances may check these channel manifests over HTTPS. They do not need GitHub credentials.
+Each [GitHub Release](../../releases) contains two files:
 
-## Security model
+- `parmenas-vX.Y.Z.zip`: the complete application, ready to upload to shared hosting.
+- `parmenas-vX.Y.Z.zip.sig.json`: its signature (version, commit, SHA-256 and an Ed25519 signature).
 
-A release manifest identifies the version, minimum supported PHP/platform versions, package URL, SHA-256 checksum, release notes, and any explicitly removed paths. Cooperative verifies the package checksum before staging an update.
+## How installations use it
 
-Automatic installation should only be enabled after the one-click update path has been proven on real shared-hosting environments.
+A Parmenas installation checks this repository from **Administration → Updates**. When a co-op's administrator chooses **Download and apply**, Parmenas:
+
+1. downloads the package and its signature;
+2. verifies the signature against the release key pinned inside the installation, plus the SHA-256 and the archive contents, and refuses anything that does not match;
+3. backs up the database, applies the update, and switches to the new version, with rollback available.
+
+No GitHub account or token is needed to receive updates.
+
+## New installations
+
+Download the latest release's `.zip` and follow the Parmenas install guide from Viable Food. Installation needs only cPanel's File Manager, a web browser, and one cron job; no command line is required.
+
+## Security
+
+Only releases signed with the Parmenas release key are accepted by installations. Please report security concerns to Viable Food privately rather than opening a public issue.
